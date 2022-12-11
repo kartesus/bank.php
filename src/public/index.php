@@ -13,9 +13,15 @@ $REQUEST_URI = explode('/', substr($_SERVER['REQUEST_URI'], 1));
 
 if (!empty($REQUEST_URI[0]) && isset($REQUEST_URI[0])) {
     if (!empty($REQUEST_URI[1]) && isset($REQUEST_URI[1])) {
-        if (file_exists('../app/handlers/' . $REQUEST_URI[0] . '/' . ucfirst($REQUEST_URI[1]) . '.php')) {
+        $queryIndex = strpos($REQUEST_URI[1], '?');
+        if ($queryIndex !== false) {
+            $REQUEST_URI[1] = ucfirst(substr($REQUEST_URI[1], 0, $queryIndex));
+        } else {
+            $REQUEST_URI[1] = ucfirst($REQUEST_URI[1]);
+        }
+        if (file_exists('../app/handlers/' . $REQUEST_URI[0] . '/' . $REQUEST_URI[1] . '.php')) {
             $handler_category = $REQUEST_URI[0];
-            $handler_class = ucfirst($REQUEST_URI[1]);
+            $handler_class = $REQUEST_URI[1];
         } else {
             $handler_category = 'errors';
             $handler_class = 'HandlerNotFound';

@@ -26,7 +26,11 @@ The changing of architectures are meant to support the move from monolith to mic
 ## Usage
 
 ```bash
-http POST :80/accounts/createAccount fiscalNumber="1111111111" name="John Doe"
-http POST :80/accounts/depositFunds fiscalNumber="111111111" amount=5000
-http POST :80/accounts/withdrawFunds fiscalNumber="111111111" amount=200
+docker-compose exec php php /app/app/migration.php
+http POST ":80/accounts/createAccount" fiscalNumber="123" name="John Doe"
+http POST ":80/accounts/depositFunds"  fiscalNumber="123" amount=5000
+http POST ":80/accounts/withdrawFunds" fiscalNumber="123" amount=200
+http POST ":80/accounts/createAccount" fiscalNumber="456" name="Jane Smith"
+http POST ":80/accounts/transferFunds" origin=123 destination=456 amount=100
+http GET  ":80/accounts/accountStatement?fiscalNumber=123"
 ```
