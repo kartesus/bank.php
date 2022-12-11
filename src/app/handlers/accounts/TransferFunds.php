@@ -48,8 +48,8 @@ class TransferFunds
         }
 
         $db->beginTransaction();
-        $db->execute('INSERT INTO transactions (accountId, amount, operation) VALUES (?, ?, "transferOut")', [$origin['id'], $data['amount']]);
-        $db->execute('INSERT INTO transactions (accountId, amount, operation) VALUES (?, ?, "transferIn")', [$destination['id'], $data['amount']]);
+        $db->execute('INSERT INTO transactions (accountId, amount, operation, source) VALUES (?, ?, "transferOut", ?)', [$origin['id'], $data['amount'], $destination['id']]);
+        $db->execute('INSERT INTO transactions (accountId, amount, operation, source) VALUES (?, ?, "transferIn", ?)', [$destination['id'], $data['amount'], $origin['id']]);
         $db->execute('UPDATE accounts SET balance = balance - ? WHERE id = ?', [$data['amount'], $origin['id']]);
         $account = $db->queryRow('SELECT balance FROM accounts WHERE id = ?', [$origin['id']]);
         if ($account['balance'] < 0) {

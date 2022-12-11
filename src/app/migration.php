@@ -15,6 +15,7 @@ $db->exec('CREATE TABLE IF NOT EXISTS accounts (
             accountId INTEGER NOT NULL,
             amount INTEGER NOT NULL,
             operation VARCHAR(255) NOT NULL,
+            source INTEGER,
             createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (accountId) REFERENCES accounts(id)
         );

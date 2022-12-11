@@ -28,12 +28,30 @@ class AccountStatement
             return;
         }
 
-        $transactions = $db->query('SELECT * FROM transactions WHERE accountId = ?', [$account['id']]);
+        $transactions = $db->query("SELECT transactions.*,
+                (CASE
+                    WHEN transactions.operation = 'transferIn' THEN
+                        'Transfer from ' || (SELECT accounts.customerName FROM accounts WHERE accounts.id = transactions.source) 
+                    WHEN transactions.operation = 'transferOut' THEN
+                        'Transfer to ' || (SELECT accounts.customerName FROM accounts WHERE accounts.id = transactions.source)
+                    ELSE transactions.operation
+                END) AS description
+        FROM transactions
+        INNER JOIN accounts
+            ON transactions.accountId = accounts.id
+        WHERE accounts.id = ?", [$account['id']]);
 
         http_response_code(200);
         echo json_encode([
-            'account' => $account,
-            'transactions' => $transactions,
+            'id' => $account['id'],
+            'balance' => $account['balance'],
+            'transactions' => array_map(function ($t) {
+                return [
+                    'amount' => $t['amount'],
+                    'description' => ucfirst($t['description']),
+                    'date' => $t['createdAt'],
+                ];
+            }, $transactions),
         ]);
     }
 }
