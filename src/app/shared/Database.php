@@ -42,4 +42,19 @@ class Database
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
+    public function beginTransaction()
+    {
+        self::getInstance()->beginTransaction();
+    }
+
+    public function commit()
+    {
+        self::getInstance()->commit();
+    }
+
+    public function rollback()
+    {
+        self::getInstance()->rollback();
+    }
+
 }

@@ -26,5 +26,6 @@ The changing of architectures are meant to support the move from monolith to mic
 ## Usage
 
 ```bash
-http POST :80/accounts/createAccount fiscalNumber="1111111111" name="John Doe" # Create account
+http POST :80/accounts/createAccount fiscalNumber="1111111111" name="John Doe"
+http POST :80/accounts/depositFunds fiscalNumber="111111111" amount=5000
 ```
