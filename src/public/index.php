@@ -29,6 +29,7 @@ if (!empty($REQUEST_URI[0]) && isset($REQUEST_URI[0])) {
     $handler_class = 'BadURL';
 }
 
+header('Content-Type: application/json; charset=utf-8');
 $handler_file = '../app/handlers/' . $handler_category . '/' . $handler_class . '.php';
 require_once $handler_file;
 $handler = new $handler_class();

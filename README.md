@@ -22,3 +22,9 @@ The changing of architectures are meant to support the move from monolith to mic
     - Withdraws show date and time.
     - Fees are shown in their own line.
     - Transfers show date, time and the name of the other party.
+
+## Usage
+
+```bash
+http POST :80/accounts/createAccount fiscalNumber="1111111111" name="John Doe" # Create account
+```
