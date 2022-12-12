@@ -19,7 +19,7 @@ if (!empty($REQUEST_URI[0]) && isset($REQUEST_URI[0])) {
         } else {
             $REQUEST_URI[1] = ucfirst($REQUEST_URI[1]);
         }
-        if (file_exists('../app/handlers/' . $REQUEST_URI[0] . '/' . $REQUEST_URI[1] . '.php')) {
+        if (file_exists('../app/api/controllers/' . $REQUEST_URI[0] . '/' . $REQUEST_URI[1] . '.php')) {
             $handler_category = $REQUEST_URI[0];
             $handler_class = $REQUEST_URI[1];
         } else {
@@ -36,7 +36,7 @@ if (!empty($REQUEST_URI[0]) && isset($REQUEST_URI[0])) {
 }
 
 header('Content-Type: application/json; charset=utf-8');
-$handler_file = '../app/handlers/' . $handler_category . '/' . $handler_class . '.php';
+$handler_file = '../app/api/controllers/' . $handler_category . '/' . $handler_class . '.php';
 require_once $handler_file;
 $handler = new $handler_class();
 $handler->run();

@@ -38,6 +38,12 @@ http GET  ":80/accounts/accountStatement?fiscalNumber=456"
 
 ## MVC
 
-This is not a proper MVC implementation but it's good enough for the purposes of
-this example. MVC, as done in most web frameworks, is more about code organization
-than about architecture because all relationship are static and known at build time.
+This is not a proper MVC implementation but it's good enough for the purposes of this example. MVC, as done in most web frameworks, is more about code organization than about architecture because all relationship are static and known at build time.
+
+## Clean Architecture
+
+The main improvement to be made is that MVC is monolithic in nature and thus harder to evolve incrementally. This is mostly because code related to business logic and infrastructure are mingled together.
+
+To add modularity to this code I'm going to implement a Clean Architecture which is more suitable for request-response style of communication, in contrast with the Hexagonal Architecture that is more reactive.
+
+I'm migrating one Use Case at a time. This is very important as I'm gonna add tests strategically to support the refactoring, not to test the application. Those tests will function as scaffolds, and will be replaced by a better suite of tests as code improves.
