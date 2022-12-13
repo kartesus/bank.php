@@ -13,3 +13,5 @@ services:
       dockerfile: PHP_Dockerfile
     volumes:
       - ./src:/app
+    environment:
+      XDEBUG_CONFIG: remote_host=host.docker.internal

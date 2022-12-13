@@ -11,16 +11,16 @@ class CreateAccount
         $this->accountGateway = $accountGateway;
     }
 
-    public function run($input, $presenter)
+    public function run($input, $output)
     {
         if (empty($input['fiscalNumber']) || empty($input['name'])) {
-            $presenter->missingRequiredFields(['fiscalNumber', 'name']);
+            $output->missingRequiredFields(['fiscalNumber', 'name']);
             return;
         }
 
         $this->accountGateway->create($input);
         $account = $this->accountGateway->get($input['fiscalNumber']);
 
-        $presenter->accountCreated($account);
+        $output->accountCreated($account);
     }
 }
