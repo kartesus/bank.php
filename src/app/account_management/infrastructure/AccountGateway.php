@@ -32,4 +32,24 @@ class AccountGateway
         $db->execute('UPDATE accounts SET balance = balance + ? + ? WHERE id = ?', [$data['amount'], $data['bonus'], $account['id']]);
         $db->commit();
     }
+
+    public function acceptWithdraw($data, $result)
+    {
+        $db = new Database();
+        $account = $this->get($data['fiscalNumber']);
+        $db->beginTransaction();
+        $db->execute('INSERT INTO transactions (accountId, amount, operation) VALUES (?, ?, "withdraw")', [$account['id'], $data['amount']]);
+        $db->execute('INSERT INTO transactions (accountId, amount, operation) VALUES (?, ?, "fee")', [$account['id'], $data['fee']]);
+        $db->execute('UPDATE accounts SET balance = balance - ? - ? WHERE id = ?', [$data['amount'], $data['fee'], $account['id']]);
+
+        $account = $this->get($data['fiscalNumber']);
+        if ($account['balance'] < 0) {
+            $db->rollback();
+            $result->withdrawRejected('insufficientFunds');
+            return;
+        }
+
+        $db->commit();
+        $result->withdrawAccepted($account);
+    }
 }

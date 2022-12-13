@@ -1,4 +1,5 @@
 <?php
+
 namespace app\account_management\use_cases;
 
 class DepositFunds
