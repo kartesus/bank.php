@@ -1,7 +1,7 @@
 <?php
 use app\shared\Context;
 use app\api\presenters\accounts\DepositFundsPresenter;
-use app\account_management\use_cases\DepositFunds as DepositFundsUseCase;
+use app\account_management\interactors\DepositFundsInteractor;
 
 class DepositFunds
 {
@@ -17,7 +17,7 @@ class DepositFunds
 
         $accountGateway = Context::getAccountGateway();
         $presenter = new DepositFundsPresenter();
-        $useCase = new DepositFundsUseCase($accountGateway);
-        $useCase->run($data, $presenter);
+        $interactor = new DepositFundsInteractor($accountGateway);
+        $interactor->run($data, $presenter);
     }
 }

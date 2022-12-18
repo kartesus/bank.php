@@ -1,6 +1,6 @@
 <?php
 
-namespace app\account_management\use_cases;
+namespace app\account_management\interactors;
 
 class WithdrawResultVisitor
 {
@@ -25,7 +25,7 @@ class WithdrawResultVisitor
     }
 }
 
-class WithdrawFunds
+class WithdrawFundsInteractor
 {
     private $accountGateway;
 

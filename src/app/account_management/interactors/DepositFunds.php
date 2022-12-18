@@ -1,8 +1,8 @@
 <?php
 
-namespace app\account_management\use_cases;
+namespace app\account_management\interactors;
 
-class DepositFunds
+class DepositFundsInteractor
 {
     private $accountGateway;
 

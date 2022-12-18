@@ -1,7 +1,7 @@
 <?php
 use app\shared\Context;
 use app\api\presenters\accounts\CreateAccountPresenter;
-use app\account_management\use_cases\CreateAccount as CreateAccountUseCase;
+use app\account_management\interactors\CreateAccountInteractor;
 
 
 class CreateAccount
@@ -18,7 +18,7 @@ class CreateAccount
 
         $accoutGateway = Context::getAccountGateway();
         $presenter = new CreateAccountPresenter();
-        $useCase = new CreateAccountUseCase($accoutGateway);
-        $useCase->run($data, $presenter);
+        $interactor = new CreateAccountInteractor($accoutGateway);
+        $interactor->run($data, $presenter);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 use app\shared\Context;
 use app\api\presenters\accounts\WithdrawFundsPresenter;
-use app\account_management\use_cases\WithdrawFunds as WithdrawFundsUseCase;
+use app\account_management\interactors\WithdrawFundsInteractor;
 
 class WithdrawFunds
 {
@@ -17,7 +17,7 @@ class WithdrawFunds
 
         $accountGateway = Context::getAccountGateway();
         $presenter = new WithdrawFundsPresenter();
-        $useCase = new WithdrawFundsUseCase($accountGateway);
-        $useCase->run($data, $presenter);
+        $interactor = new WithdrawFundsInteractor($accountGateway);
+        $interactor->run($data, $presenter);
     }
 }
