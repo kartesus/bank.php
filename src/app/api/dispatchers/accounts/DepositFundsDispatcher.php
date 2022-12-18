@@ -3,9 +3,9 @@ use app\shared\Context;
 use app\api\presenters\accounts\DepositFundsPresenter;
 use app\account_management\interactors\DepositFundsInteractor;
 
-class DepositFunds
+class DepositFundsDispatcher
 {
-    public function run()
+    public function dispatch()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             http_response_code(405);

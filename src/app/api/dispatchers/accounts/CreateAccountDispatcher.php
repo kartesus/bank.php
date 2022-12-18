@@ -4,9 +4,9 @@ use app\api\presenters\accounts\CreateAccountPresenter;
 use app\account_management\interactors\CreateAccountInteractor;
 
 
-class CreateAccount
+class CreateAccountDispatcher
 {
-    public function run()
+    public function dispatch()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             http_response_code(405);

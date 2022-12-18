@@ -19,24 +19,24 @@ if (!empty($REQUEST_URI[0]) && isset($REQUEST_URI[0])) {
         } else {
             $REQUEST_URI[1] = ucfirst($REQUEST_URI[1]);
         }
-        if (file_exists('../app/api/controllers/' . $REQUEST_URI[0] . '/' . $REQUEST_URI[1] . '.php')) {
+        if (file_exists('../app/api/dispatchers/' . $REQUEST_URI[0] . '/' . $REQUEST_URI[1] . 'Dispatcher.php')) {
             $handler_category = $REQUEST_URI[0];
-            $handler_class = $REQUEST_URI[1];
+            $handler_class = $REQUEST_URI[1] . 'Dispatcher';
         } else {
             $handler_category = 'errors';
-            $handler_class = 'HandlerNotFound';
+            $handler_class = 'HandlerNotFoundDispatcher';
         }
     } else {
         $handler_category = 'errors';
-        $handler_class = 'CategoryNotFound';
+        $handler_class = 'CategoryNotFoundDispatcher';
     }
 } else {
     $handler_category = 'errors';
-    $handler_class = 'BadURL';
+    $handler_class = 'BadURLDispatcher';
 }
 
 header('Content-Type: application/json; charset=utf-8');
-$handler_file = '../app/api/controllers/' . $handler_category . '/' . $handler_class . '.php';
+$handler_file = '../app/api/dispatchers/' . $handler_category . '/' . $handler_class . '.php';
 require_once $handler_file;
 $handler = new $handler_class();
-$handler->run();
+$handler->dispatch();

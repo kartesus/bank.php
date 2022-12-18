@@ -1,9 +1,9 @@
 <?php
 use app\shared\Database;
 
-class AccountStatement
+class AccountStatementDispatcher
 {
-    public function run()
+    public function dispatch()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
             http_response_code(405);

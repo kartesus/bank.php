@@ -1,9 +1,9 @@
 <?php
 use app\shared\Database;
 
-class TransferFunds
+class TransferFundsDispatcher
 {
-    public function run()
+    public function dispatch()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             http_response_code(405);

@@ -3,9 +3,9 @@ use app\shared\Context;
 use app\api\presenters\accounts\WithdrawFundsPresenter;
 use app\account_management\interactors\WithdrawFundsInteractor;
 
-class WithdrawFunds
+class WithdrawFundsDispatcher
 {
-    public function run()
+    public function dispatch()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             http_response_code(405);
