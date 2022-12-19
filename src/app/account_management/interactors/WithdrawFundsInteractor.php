@@ -2,29 +2,6 @@
 
 namespace app\account_management\interactors;
 
-class WithdrawResultVisitor
-{
-    private $output;
-
-    public function __construct($output)
-    {
-        $this->output = $output;
-    }
-
-    public function withdrawRejected($reason)
-    {
-        if ($reason === 'insufficientFunds')
-            $this->output->insufficientFunds();
-        else
-            $this->output->unknownError();
-    }
-
-    public function withdrawAccepted($account)
-    {
-        $this->output->withdrawAccepted($account);
-    }
-}
-
 class WithdrawFundsInteractor
 {
     private $accountGateway;
@@ -50,5 +27,28 @@ class WithdrawFundsInteractor
         $fee = intdiv($input['amount'], 100);
         $withdraw = ['fiscalNumber' => $input['fiscalNumber'], 'amount' => $input['amount'], 'fee' => $fee];
         $this->accountGateway->acceptWithdraw($withdraw, new WithdrawResultVisitor($output));
+    }
+}
+
+class WithdrawResultVisitor
+{
+    private $output;
+
+    public function __construct($output)
+    {
+        $this->output = $output;
+    }
+
+    public function withdrawRejected($reason)
+    {
+        if ($reason === 'insufficientFunds')
+            $this->output->insufficientFunds();
+        else
+            $this->output->unknownError();
+    }
+
+    public function withdrawAccepted($account)
+    {
+        $this->output->withdrawAccepted($account);
     }
 }

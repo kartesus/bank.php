@@ -31,7 +31,7 @@ http POST ":80/accounts/createAccount" fiscalNumber=123 name="John Doe"
 http POST ":80/accounts/depositFunds"  fiscalNumber=123 amount=5000
 http POST ":80/accounts/withdrawFunds" fiscalNumber=123 amount=200
 http POST ":80/accounts/createAccount" fiscalNumber=456 name="Jane Smith"
-http POST ":80/accounts/transferFunds" origin=123 destination=456 amount=200
+http POST ":80/accounts/transferFunds" source=123 destination=456 amount=200
 http GET  ":80/accounts/accountStatement?fiscalNumber=123"
 http GET  ":80/accounts/accountStatement?fiscalNumber=456"
 ```

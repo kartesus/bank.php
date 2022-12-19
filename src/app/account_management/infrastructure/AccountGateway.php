@@ -52,4 +52,26 @@ class AccountGateway
         $db->commit();
         $result->withdrawAccepted($account);
     }
+
+    public function acceptTransfer($data, $result)
+    {
+        $db = new Database();
+        $source = $this->get($data['source']);
+        $destination = $this->get($data['destination']);
+        $db->beginTransaction();
+        $db->execute('INSERT INTO transactions (accountId, amount, operation, source) VALUES (?, ?, "transferOut", ?)', [$source['id'], $data['amount'], $destination['id']]);
+        $db->execute('INSERT INTO transactions (accountId, amount, operation, source) VALUES (?, ?, "transferIn", ?)', [$destination['id'], $data['amount'], $source['id']]);
+        $db->execute('UPDATE accounts SET balance = balance - ? WHERE id = ?', [$data['amount'], $source['id']]);
+        $db->execute('UPDATE accounts SET balance = balance + ? WHERE id = ?', [$data['amount'], $destination['id']]);
+
+        $source = $this->get($data['source']);
+        if ($source['balance'] < 0) {
+            $db->rollback();
+            $result->transferRejected('insufficientFunds');
+            return;
+        }
+
+        $db->commit();
+        $result->transferAccepted($data);
+    }
 }
